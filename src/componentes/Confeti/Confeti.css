@@ -1,0 +1,48 @@
+/* ===== Confeti ===== */
+.confeti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* no bloquea los clics del formulario */
+  overflow: visible;
+  z-index: 5;
+}
+
+.confeti__pieza {
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  width: 7px;
+  height: 11px;
+  border-radius: 1px;
+  background-color: var(--c);
+  opacity: 0;
+  animation: confeti-volar 1.6s cubic-bezier(0.2, 0.7, 0.4, 1) forwards;
+}
+
+.confeti__pieza--redonda {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Sube como explosión y después cae girando */
+@keyframes confeti-volar {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(0);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--dx) * 0.6), var(--sube)) rotate(calc(var(--giro) * 0.4));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx)), var(--baja)) rotate(var(--giro));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confeti {
+    display: none;
+  }
+}

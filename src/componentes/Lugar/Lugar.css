@@ -1,0 +1,116 @@
+/* ===== ¿Dónde? (fondo oscuro, alterna con la sección de la fecha) ===== */
+.lugar {
+  background-color: var(--azul);
+  color: var(--marfil);
+}
+
+.lugar__contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+/* ===== Taxi ===== */
+.taxi {
+  width: 84px;
+  height: auto;
+  overflow: visible; /* deja ver el brillo de los faros */
+  /* resplandor champagne alrededor del autito */
+  filter: drop-shadow(0 0 6px rgba(197, 169, 130, 0.55));
+  animation:
+    andar 1.6s ease-in-out infinite,
+    resplandor 2.8s ease-in-out infinite;
+}
+
+/* Halos de luz de los faros: se encienden y apagan */
+.taxi__halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: faro 2.8s ease-in-out infinite;
+}
+
+.taxi__halo--faro { fill: var(--marfil); }
+.taxi__halo--trasero { fill: #C82D46; animation-delay: 1.4s; }
+
+/* Saltito suave, como si fuera andando */
+@keyframes andar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+/* El resplandor del auto respira igual que la cuenta regresiva */
+@keyframes resplandor {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3)); }
+  50% { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.65)); }
+}
+
+@keyframes faro {
+  0%, 100% { opacity: 0.15; transform: scale(0.7); }
+  50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .taxi,
+  .taxi__halo {
+    animation: none;
+  }
+}
+
+.taxi__cuerpo { fill: var(--blanco); }
+.taxi__ventana,
+.taxi__cuadro { fill: var(--azul); }
+.taxi__puerta { stroke: var(--azul); stroke-width: 0.8; fill: none; }
+.taxi__trasera { fill: var(--rojo); }
+.taxi__faro { fill: var(--marfil); }
+.taxi__rueda { fill: var(--azul); stroke: var(--blanco); stroke-width: 1.5; }
+.taxi__llanta { fill: var(--blanco); }
+
+/* La tipografía viene de la clase .titulo */
+.lugar__titulo {
+  margin-top: 1.5rem;
+  font-size: clamp(2.4rem, 11vw, 3.4rem);
+}
+
+.lugar__nombre {
+  margin-top: 3rem;
+  font-size: clamp(1.5rem, 7vw, 2rem);
+  line-height: 1.15;
+  color: var(--marfil); /* mismo color que el título */
+}
+
+.lugar__direccion {
+  margin-top: 1.5rem;
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Botón con borde, se rellena al pasar el mouse */
+.lugar__boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 2.5rem;
+  padding: 0 2rem 0 2.35rem; /* compensa el espaciado de letras */
+   border: 1px solid var(--rojo);
+  background-color: var(--rojo);
+  color: var(--blanco);
+  
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.lugar__boton:hover,
+.lugar__boton:focus-visible {
+    background-color: #A62537; /* bordó un poco más claro al tocar */
+  border-color: #A62537;
+}

@@ -1,0 +1,126 @@
+/* Fuentes: Bodoni Moda (títulos, estilo de la clienta) + Jost (textos) */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400&family=Jost:wght@300;400;500&display=swap');
+
+/* ===== Paleta y fuentes de la tarjeta ===== */
+:root {
+  --azul: #101E35;       /* Midnight blue */
+  --rojo: #8B1E2D;       /* New York red */
+  --marfil: #F2E8DC;     /* Warm ivory */
+  --champagne: #C5A982;  /* Champagne */
+    --blanco: #FFFFFF;     /* Fondo de las secciones claras */
+
+  --fuente-titulos: 'Bodoni Moda', 'Didot', serif;
+  --fuente-texto: 'Jost', sans-serif;
+}
+
+/* ===== Reset ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100svh;
+  background-color: var(--azul);
+  color: var(--marfil);
+  font-family: var(--fuente-texto);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+
+  /* Grosor de la Bodoni igual en TODA la tarjeta (tomado de "OLIVIA" del Hero).
+     Jost no tiene este ajuste, así que a los textos no les afecta. */
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' 20;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ===== Clases generales (se usan en todas las secciones) ===== */
+
+/* Todo texto con la tipografía de la clienta usa esta clase */
+.titulo {
+  font-family: var(--fuente-titulos);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+}
+
+.etiqueta {
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--champagne);
+}
+
+.seccion {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+/* Contenedor del resto de la tarjeta (después de la portada) */
+.tarjeta {
+  animation: aparecer 0.8s ease both;
+}
+
+
+/* ===== Aparición al hacer scroll (la activa el hook useRevelar) ===== */
+.revelar {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.revelar--visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revelar {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+
+
+
+
+
+
+
+/* ===== Animaciones ===== */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

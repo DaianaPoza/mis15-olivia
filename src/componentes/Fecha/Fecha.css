@@ -1,0 +1,47 @@
+/* ===== ¿Cuándo? ===== */
+.fecha {
+  background-color: var(--blanco);
+  color: var(--azul);
+}
+
+.fecha__contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.fecha__icono {
+  width: 48px;
+  height: 48px;
+  fill: none;
+  stroke: var(--azul);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* La tipografía viene de la clase .titulo */
+.fecha__titulo {
+  margin-top: 1.5rem;
+  font-size: clamp(2.4rem, 11vw, 3.4rem);
+}
+
+.fecha__dia {
+  margin-top: 3rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+
+
+/* La tipografía viene de la clase .titulo */
+.fecha__hora {
+  font-size: 1.8rem;
+  letter-spacing: 0.12em;
+  margin-top: 2.5rem;
+}

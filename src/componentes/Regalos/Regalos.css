@@ -1,0 +1,182 @@
+/* ===== Regalos (fondo azul, letra blanca) ===== */
+.regalos {
+  background-color: var(--azul);
+  color: var(--blanco);
+}
+
+.regalos__contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+/* ===== Ícono de regalo animado ===== */
+.regalo {
+  width: 64px;
+  height: 64px;
+  overflow: visible;
+  fill: none;
+  stroke: var(--blanco);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+  transform-origin: 50% 100%;
+  animation: sacudir 3.5s ease-in-out infinite;
+}
+
+.regalo__tapa {
+  transform-box: fill-box;
+  transform-origin: 0% 100%; /* bisagra en la esquina izquierda */
+  animation: saltar-tapa 3.5s ease-in-out infinite;
+  transition: transform 0.5s ease;
+}
+
+.regalo__chispas {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Abierto: deja de sacudirse, la tapa se levanta y aparecen chispitas */
+.regalo--abierto {
+  animation: none;
+}
+
+.regalo--abierto .regalo__tapa {
+  animation: none;
+  transform: translate(-3px, -10px) rotate(-22deg);
+}
+
+.regalo--abierto .regalo__chispas {
+  opacity: 1;
+  animation: titilar 1.2s ease-in-out infinite;
+}
+
+@keyframes sacudir {
+  0%, 70%, 100% { transform: rotate(0); }
+  75% { transform: rotate(-6deg); }
+  80% { transform: rotate(6deg); }
+  85% { transform: rotate(-4deg); }
+  90% { transform: rotate(3deg); }
+}
+
+@keyframes saltar-tapa {
+  0%, 72%, 100% { transform: translateY(0) rotate(0); }
+  82% { transform: translateY(-5px) rotate(-6deg); }
+  90% { transform: translateY(0) rotate(0); }
+}
+
+@keyframes titilar {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ===== Textos ===== */
+.regalos__titulo {
+  margin-top: 1.5rem;
+  font-size: clamp(2.4rem, 11vw, 3.4rem);
+}
+
+.regalos__frase {
+  max-width: 320px;
+  margin-top: 2rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ===== Botón "Ver datos" (mismo estilo que "Cómo llegar") ===== */
+.regalos__boton {
+  min-height: 48px;
+  margin-top: 2.5rem;
+  padding: 0 2rem 0 2.35rem; /* compensa el espaciado de letras */
+  border: 1px solid var(--rojo);
+  background-color: var(--rojo);
+  color: var(--blanco);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.regalos__boton:hover,
+.regalos__boton:focus-visible {
+   background-color: #A62537; /* bordó un poco más claro al tocar */
+  border-color: #A62537;
+}
+
+/* ===== Datos desplegables ===== */
+.regalos__datos {
+  display: grid;
+  grid-template-rows: 0fr; /* cerrado */
+  width: 100%;
+  max-width: 320px;
+  opacity: 0;
+  transition: grid-template-rows 0.5s ease, opacity 0.5s ease;
+}
+
+.regalos__datos--visible {
+  grid-template-rows: 1fr; /* abierto */
+  opacity: 1;
+}
+
+.regalos__datos-interno {
+  overflow: hidden;
+}
+
+.regalos__tarjeta {
+  margin-top: 2rem;
+  padding: 1.6rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.regalos__etiqueta {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.regalos__alias {
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  word-break: break-all;
+}
+
+.regalos__copiar {
+  min-height: 44px;
+  margin-top: 0.6rem;
+  padding: 0 1.6rem;
+  background-color: var(--blanco);
+  color: var(--azul);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.regalos__copiar:hover,
+.regalos__copiar:focus-visible {
+  background-color: var(--rojo);
+  color: var(--blanco);
+}
+
+/* Si la persona tiene desactivadas las animaciones */
+@media (prefers-reduced-motion: reduce) {
+  .regalo,
+  .regalo__tapa,
+  .regalo--abierto .regalo__chispas {
+    animation: none;
+  }
+}

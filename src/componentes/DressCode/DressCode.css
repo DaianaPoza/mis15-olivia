@@ -1,0 +1,105 @@
+/* ===== Dress code (sección clara, como la Fecha) ===== */
+.dress {
+  background-color: var(--blanco);
+  color: var(--azul);
+}
+
+.dress__contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  /* el título queda a la misma altura que en las secciones con ícono arriba */
+  padding-top: calc(5rem + 48px + 1.5rem);
+  padding-bottom: 5rem;
+}
+
+/* La tipografía viene de la clase .titulo */
+.dress__titulo {
+  font-size: clamp(2.4rem, 11vw, 3.4rem);
+}
+
+/* ===== Ilustración: vestido y saco ===== */
+.dress__ropa {
+  width: min(240px, 70vw);
+  height: auto;
+  margin-top: 2.5rem;
+  overflow: visible;
+}
+
+.dress__percha {
+  fill: none;
+  stroke: var(--azul);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dress__bretel {
+  fill: none;
+  stroke: var(--rojo);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.dress__bordo { fill: var(--rojo); }
+.dress__azul { fill: var(--azul); }
+.dress__camisa { fill: var(--blanco); }
+.dress__boton { fill: var(--marfil); }
+
+.dress__pliegue {
+  fill: none;
+  stroke: #5E1220; /* bordó más oscuro para los pliegues */
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+.dress__reflejo {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+
+.dress__costura {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dress__costura--suave {
+  stroke: rgba(255, 255, 255, 0.2);
+}
+
+/* Cada prenda se balancea suave desde el gancho de la percha */
+.dress__prenda {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: balanceo-ropa 3.2s ease-in-out infinite;
+}
+
+.dress__prenda--2 {
+  animation-delay: -1.6s; /* se mueven alternadas */
+}
+
+@keyframes balanceo-ropa {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+
+/* ===== Texto ===== */
+.dress__estilo {
+  margin-top: 2.5rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dress__prenda {
+    animation: none;
+  }
+}

@@ -1,0 +1,53 @@
+/* ===== Footer (fondo azul, letra blanca) ===== */
+.footer {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--azul);
+  color: var(--blanco);
+  text-align: center;
+}
+
+.footer__contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 1.5rem 0;
+}
+
+/* "Mis 15" y "Olivia": misma tipografía que el Hero (clase .titulo) */
+.footer__mis {
+  font-size: clamp(1.8rem, 8vw, 2.6rem);
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+}
+
+.footer__nombre {
+  margin-top: 1rem;
+  font-size: clamp(3.4rem, 17vw, 5.5rem);
+  text-shadow:
+    0 0 14px rgba(255, 255, 255, 0.35),
+    0 0 40px rgba(200, 45, 70, 0.45);
+}
+
+.footer__frase {
+  max-width: 280px;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* Skyline: la imagen trae mucho margen transparente, por eso se agranda al 150%
+   y se centra; el sobrante queda oculto (overflow: hidden en .footer) */
+.footer__skyline {
+  display: block;
+  width: 150%;
+  max-width: 1200px;
+  height: auto;
+  margin: -1rem 0 0 50%;
+  transform: translateX(-50%);
+  opacity: 0.9;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+}

@@ -1,0 +1,427 @@
+/* ===== Confirmación: imagen difuminada clara de fondo, como el Hero ===== */
+.confirmacion {
+  position: relative;
+  overflow: hidden; /* recorta el borde del desenfoque */
+  background-color: var(--blanco);
+  color: var(--azul);
+}
+
+/* Imagen de fondo en toda la sección */
+.confirmacion__fondo,
+.confirmacion__fondo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.confirmacion__fondo img {
+  object-fit: cover;
+  object-position: center top; /* prioriza el Empire State y los carteles */
+  filter: blur(4px) saturate(0.85) brightness(1.05);
+  transform: scale(1.1); /* evita bordes borrosos */
+}
+
+/* Velo blanco: versión clara del Hero */
+.confirmacion__capa {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.35) 40%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+}
+
+/* Contenido por encima de la foto */
+.confirmacion__contenido {
+  position: relative;
+  /* el título queda a la misma altura que en las demás secciones */
+  padding-top: calc(5rem + 48px + 1.5rem);
+  padding-bottom: 5rem;
+}
+
+.confirmacion__encabezado {
+  position: relative;
+  isolation: isolate; /* mantiene la nube de luz detrás del texto */
+  text-align: center;
+}
+
+/* Nube de luz blanca detrás del título: tapa suave lo que haya en la foto (como el cartel) */
+.confirmacion__encabezado::before {
+  content: '';
+  position: absolute;
+  inset: -3rem -2rem;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.6) 45%,
+    rgba(255, 255, 255, 0) 72%
+  );
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+/* Título con halo blanco que "respira", como la cuenta regresiva */
+.confirmacion__titulo {
+  font-size: clamp(2.2rem, 10vw, 3.2rem);
+  line-height: 1.05;
+  animation: brillo-claro 2.8s ease-in-out infinite;
+}
+
+@keyframes brillo-claro {
+  0%, 100% {
+    text-shadow:
+      0 0 6px rgba(255, 255, 255, 1),
+      0 0 16px rgba(255, 255, 255, 0.85),
+      0 0 30px rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, 1),
+      0 0 24px rgba(255, 255, 255, 1),
+      0 0 48px rgba(255, 255, 255, 0.9),
+      0 0 64px rgba(197, 169, 130, 0.6);
+  }
+}
+
+.confirmacion__descripcion {
+  max-width: 300px;
+  margin: 1.5rem auto 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-shadow:
+    0 0 6px rgba(255, 255, 255, 1),
+    0 0 14px rgba(255, 255, 255, 1),
+    0 0 28px rgba(255, 255, 255, 0.8);
+}
+
+/* Tarjeta del formulario: sin bordes, el blanco se difumina hacia la foto */
+.confirmacion__tarjeta {
+  position: relative; /* para el confeti y el fondo difuminado */
+  isolation: isolate; /* mantiene el fondo difuminado detrás del formulario */
+  margin-top: 2.5rem;
+  padding: 2rem 1.25rem 2.25rem;
+}
+
+/* El fondo blanco va en una capa aparte, con los bordes que se desvanecen */
+.confirmacion__tarjeta::before {
+  content: '';
+  position: absolute;
+  inset: -1.5rem; /* un poco más grande que el formulario, para que el fundido no lo toque */
+  z-index: -1;
+  background-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  /* máscara: opaco en el centro y transparente en los 4 bordes */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent),
+    linear-gradient(to bottom, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent),
+    linear-gradient(to bottom, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
+  mask-composite: intersect;
+  pointer-events: none;
+}
+
+/* ===== Formulario ===== */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.campo__etiqueta {
+  padding: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.campo__input {
+  min-height: 48px;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(16, 30, 53, 0.3);
+  background-color: var(--blanco);
+  color: var(--azul);
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.campo__input::placeholder {
+  color: rgba(16, 30, 53, 0.45);
+}
+
+.campo__input:focus {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 3px rgba(16, 30, 53, 0.12);
+}
+
+.campo--aparece {
+  animation: aparecer 0.4s ease both;
+}
+
+/* Grupos de opciones (fieldset sin estilo de navegador) */
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border: none;
+  min-width: 0;
+}
+
+.grupo legend {
+  margin-bottom: 0.6rem;
+}
+
+.grupo__opciones {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.grupo__opciones--dos {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grupo__opciones--tres {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Opción tipo botón: el radio real queda oculto pero sigue siendo accesible */
+.opcion {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 0.5rem;
+  border: 1px solid rgba(16, 30, 53, 0.3);
+  font-size: 0.95rem;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.opcion input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.opcion:hover {
+  border-color: var(--azul);
+}
+
+.opcion:has(input:focus-visible) {
+  outline: 2px solid var(--azul);
+  outline-offset: 2px;
+}
+
+.opcion--activa {
+  background-color: var(--azul);
+  border-color: var(--azul);
+  color: var(--blanco);
+}
+
+.opcion--chica {
+  min-height: 44px;
+  font-size: 0.85rem;
+}
+
+/* ===== Lo que aparece si asiste ===== */
+.formulario__extra {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  animation: aparecer 0.5s ease both;
+}
+
+/* Contador − 1 + */
+.contador {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.contador__boton {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--azul);
+  color: var(--azul);
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.contador__boton:hover:not(:disabled) {
+  background-color: var(--azul);
+  color: var(--blanco);
+}
+
+.contador__boton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.contador__numero {
+  min-width: 2ch;
+  font-family: var(--fuente-titulos);
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Tarjeta de cada invitado */
+.invitado {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.4rem 1.1rem 1.5rem;
+  border: none;
+  border-left: 3px solid var(--rojo);
+  background-color: rgba(16, 30, 53, 0.04);
+  min-width: 0;
+  animation: aparecer 0.4s ease both;
+}
+
+.invitado__titulo {
+  float: left; /* hace que el legend quede dentro de la tarjeta */
+  width: 100%;
+  margin-bottom: 0.25rem;
+  font-family: var(--fuente-titulos);
+  font-size: 1.15rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ===== Error y botón final ===== */
+.formulario__error {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--rojo);
+  text-align: center;
+}
+
+.formulario__enviar {
+  align-self: center;
+  min-height: 52px;
+  margin-top: 0.5rem;
+  padding: 0 2.6rem 0 3rem; /* compensa el espaciado de letras */
+  border: 1px solid var(--rojo);
+  background-color: var(--rojo);
+  color: var(--blanco);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  animation: latir 2.8s ease-in-out infinite;
+}
+
+.formulario__enviar:hover,
+.formulario__enviar:focus-visible {
+  background-color: #A62537;
+  border-color: #A62537;
+  animation-play-state: paused; /* se queda quieto al tocarlo */
+}
+
+/* Dos latidos cortitos y una pausa, como un corazón */
+@keyframes latir {
+  0%, 60%, 100% { transform: scale(1); }
+  70% { transform: scale(1.06); }
+  78% { transform: scale(1); }
+  86% { transform: scale(1.04); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .formulario__enviar {
+    animation: none;
+  }
+}
+
+/* ===== Mensaje de gracias ===== */
+.confirmacion__gracias {
+  padding: 1rem 0;
+  text-align: center;
+  animation: aparecer 0.6s ease both;
+}
+
+.confirmacion__gracias-titulo {
+  font-size: clamp(2.4rem, 11vw, 3.2rem);
+}
+
+.confirmacion__gracias-texto {
+  max-width: 300px;
+  margin: 1.25rem auto 0;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .confirmacion__titulo {
+    animation: none;
+    text-shadow:
+      0 0 8px rgba(255, 255, 255, 1),
+      0 0 20px rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* ===== Celulares: la foto se ve COMPLETA arriba y se funde a blanco ===== */
+@media (max-width: 767px) {
+  .confirmacion__fondo {
+    inset: 0 0 auto 0; /* pegada arriba, sin estirarse a toda la sección */
+    height: auto;
+    overflow: hidden;
+  }
+
+  .confirmacion__fondo img {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto; /* respeta la proporción original: no se recorta */
+    object-fit: initial;
+    transform: scale(1.03); /* mínimo, solo para ocultar el borde del desenfoque */
+  }
+
+  /* El velo cubre solo la foto (alto = ancho × 4/3) y termina en blanco */
+  .confirmacion__capa {
+    inset: 0 0 auto 0;
+    height: calc(100vw * 4 / 3 + 4px); /* un poquito más, para tapar el borde de la foto */
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.15) 75%,
+      var(--blanco) 94%
+    );
+  }
+
+  /* El título queda sobre el cielo y el formulario empieza recién al final de la foto,
+     así se ven el puente y la calle */
+  .confirmacion__encabezado {
+    min-height: calc(100vw * 4 / 3 - (5rem + 48px + 1.5rem) - 3rem);
+  }
+
+  .confirmacion__tarjeta {
+    margin-top: 0;
+  }
+}

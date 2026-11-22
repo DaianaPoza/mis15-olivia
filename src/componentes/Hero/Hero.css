@@ -1,108 +1,120 @@
-/* ===== Hero ===== */
+/* ===== Hero: letras recortadas con la foto adentro ===== */
 .hero {
-  position: relative;
-  min-height: 100svh;
-  display: flex;
-  align-items: flex-start; /* el contenido arranca arriba */
-  justify-content: center;
-  overflow: hidden; /* recorta el borde del desenfoque */
-  background-color: var(--azul);
-  color: var(--marfil);
-  text-align: center;
-}
-
-/* Imagen de fondo difuminada */
-.hero__fondo,
-.hero__fondo img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.hero__fondo img {
-  object-fit: cover;
-  object-position: center;
-  filter: blur(3px) saturate(0.9);
-  transform: scale(1.1); /* agranda un poco para que no se vean bordes borrosos */
-  animation: acercar 20s ease-out both;
-}
-
-/* Capa de color: azul medianoche, más intensa arriba y abajo */
-.hero__capa {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(16, 30, 53, 0.65) 0%,
-      rgba(16, 30, 53, 0.35) 45%,
-      rgba(16, 30, 53, 0.75) 100%
-    );
-}
-
-/* Texto */
-.hero__contenido {
-  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  min-height: 100svh; /* ocupa toda la pantalla para poder mandar la cuenta abajo */
-  padding: 14svh 1.5rem 9svh; /* arriba: nombre / abajo: aire bajo la cuenta */
+  background-color: var(--blanco);
+  color: var(--azul);
+  overflow: hidden;
 }
 
-/* "Mis 15": la tipografía viene de la clase .titulo */
-.hero__mis {
-  font-size: clamp(2.2rem, 10vw, 3.4rem);
-
-  text-shadow: 0 0 18px rgba(197, 169, 130, 0.45);
-  animation: aparecer 1s 0.2s ease both;
-  text-shadow:
-    0 0 14px rgba(242, 232, 220, 0.35),
-    0 0 40px rgba(200, 45, 70, 0.45);
+/* ----- Arriba: forma de "L" invertida en azul, como en la referencia ----- */
+.hero__arriba {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  grid-template-rows: auto auto;
 }
 
-.hero__nombre {
-  margin-top: 1.25rem;
-  font-size: clamp(4.2rem, 22vw, 8rem);
-  text-shadow:
-    0 0 14px rgba(242, 232, 220, 0.35),
-    0 0 40px rgba(200, 45, 70, 0.45);
-  animation: aparecer 1s 0.4s ease both;
+/* Franja azul fina a todo el ancho, por encima de "Mis 15" */
+.hero__techo {
+  grid-column: 1 / -1;
+  height: max(28px, 4.5svh);
+  background-color: var(--azul);
 }
 
-.hero__linea {
-  width: 64px;
-  height: 1px;
-  margin-top: 1.75rem;
-  background-color: var(--champagne);
-  animation: aparecer 1s 0.6s ease both;
-}
-
-/* Contenedor de la cuenta regresiva */
-.hero__cuenta {
-  width: 100%;
+.hero__mis-caja {
   display: flex;
+  align-items: flex-end;
+  min-height: 12svh;
+  padding: 1.25rem 1.5rem 1rem;
+  background-color: var(--blanco);
+}
+
+/* "Mis 15": misma tipografía de siempre (clase .titulo) */
+.hero__mis {
+  font-size: clamp(1.8rem, 8vw, 3rem);
+  animation: aparecer 0.9s 0.1s ease both;
+}
+
+.hero__bloque {
+  background-color: var(--azul);
+}
+
+/* ----- "OLIVIA" con la foto adentro ----- */
+.hero__nombre {
+  /* Bodoni, la tipografía de la clienta, en su versión más gruesa
+     para que se vea bien la foto adentro */
+  font-family: var(--fuente-titulos);
+  font-weight: 800; /* trazos gruesos más anchos */
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' 6; /* trazos finos lo más gruesos posible */
+  /* 20vw: como la letra es más ancha, se achica un poco para que entre en cualquier celular */
+  font-size: clamp(4rem, 20vw, 16rem);
+  line-height: 0.9;
+  letter-spacing: 0;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0.18em 0.15em 0; /* aire blanco arriba de las letras */
+
+  /* Estira las letras hacia abajo: más altas y alargadas, como en la referencia */
+  transform: scaleY(1.9);
+  transform-origin: top center;
+  /* compensa el espacio que ocupa el estirado + aire blanco abajo */
+  margin-bottom: calc(0.81em + 0.18em);
+
+  /* La magia: la foto se recorta con la forma de las letras */
+  background-image: var(--hero-mobile);
+  background-size: cover;
+  background-position: center 35%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  /* (no usa "aparecer" porque esa animación pisaría el estirado de las letras) */
+  animation:
+    fundido 1.2s 0.25s ease both,
+    paneo 18s ease-in-out infinite alternate;
+}
+
+/* Pantallas grandes: usa la foto horizontal */
+@media (min-width: 768px) {
+  .hero__nombre {
+    background-image: var(--hero-desktop);
+  }
+}
+
+@keyframes fundido {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* La foto se desplaza muy despacio dentro de las letras */
+@keyframes paneo {
+  from { background-position: center 25%; }
+  to { background-position: center 55%; }
+}
+
+/* ----- Franjas azules que enmarcan la cuenta regresiva ----- */
+.hero__franja {
+  height: 12px;
+  background-color: var(--azul);
+}
+
+/* ----- Abajo: cuenta regresiva en bloque azul con letras blancas ----- */
+.hero__abajo {
+  display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: auto;   /* empuja la cuenta al fondo de la pantalla */
-  padding-top: 3rem;  /* separación mínima en pantallas bajitas */
-  animation: aparecer 1s 0.8s ease both;
+  padding: 3rem 1.5rem 3.25rem;
+  text-align: center;
+  background-color: var(--azul);
+  color: var(--blanco);
+  animation: aparecer 1s 0.5s ease both;
 }
 
-/* Zoom muy lento sobre la foto */
-@keyframes acercar {
-  from {
-    transform: scale(1.18);
-  }
-  to {
-    transform: scale(1.1);
-  }
-}
-
-/* Si la persona tiene desactivadas las animaciones en su celu, se respeta */
 @media (prefers-reduced-motion: reduce) {
-  .hero__fondo img {
+  .hero__nombre {
     animation: none;
   }
 }

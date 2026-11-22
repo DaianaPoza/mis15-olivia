@@ -1,19 +1,18 @@
-/* ===== Cuenta regresiva (va dentro del Hero) ===== */
-/* Sin panel: los números flotan sobre la foto con un brillo bordó tipo neón */
+/* ===== Cuenta regresiva (va dentro del Hero, sobre fondo blanco) ===== */
 
 .cuenta {
   width: 100%;
-  max-width: 380px;
+  max-width: 420px;
 }
 
 .cuenta__etiqueta {
   margin-bottom: 1.2rem;
   padding-left: 0.4em; /* compensa el espaciado para centrar */
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.4em;
   text-transform: uppercase;
- 
+  color: var(--blanco);
 }
 
 /* 4 columnas iguales: siempre en una sola línea */
@@ -29,15 +28,14 @@
   gap: 0.6rem;
 }
 
-/* Números: marfil con halo bordó que "respira" (aparece y se apaga suave) */
+/* Números blancos con un brillo que "respira": 14vw crece con la pantalla sin desbordar */
 .cuenta__numero {
-  /* 12vw crece con la pantalla; nunca baja de 2.4rem ni pasa de 3.8rem */
-  font-size: clamp(2.4rem, 12vw, 3.8rem);
+  font-size: clamp(2.6rem, 14vw, 4.4rem);
   line-height: 1;
   white-space: nowrap;
-  color: var(--marfil);
+  color: var(--blanco);
   font-variant-numeric: tabular-nums;
-  animation: brillo 2.8s ease-in-out infinite;
+  animation: brillo-blanco 2.8s ease-in-out infinite;
 }
 
 /* El número que cambia hace un pequeño "latido" */
@@ -47,33 +45,31 @@
 }
 
 .cuenta__texto {
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  
+  color: var(--blanco);
+  opacity: 0.8;
 }
 
 .cuenta__final {
   font-size: 2rem;
-  color: var(--marfil);
-  animation: brillo 2.8s ease-in-out infinite;
+  color: var(--blanco);
+  animation: brillo-blanco 2.8s ease-in-out infinite;
 }
 
-/* ===== Animaciones ===== */
-@keyframes brillo {
-  0%,
-  100% {
+@keyframes brillo-blanco {
+  0%, 100% {
     text-shadow:
-      0 0 4px rgba(200, 45, 70, 0.6),
-      0 0 10px rgba(200, 45, 70, 0.45),
-      0 0 22px rgba(139, 30, 45, 0.6);
+      0 0 4px rgba(255, 255, 255, 0.5),
+      0 0 12px rgba(255, 255, 255, 0.3);
   }
   50% {
     text-shadow:
-      0 0 8px rgba(200, 45, 70, 1),
-      0 0 22px rgba(200, 45, 70, 0.85),
-      0 0 44px rgba(139, 30, 45, 1);
+      0 0 6px rgba(255, 255, 255, 0.9),
+      0 0 18px rgba(255, 255, 255, 0.7),
+      0 0 36px rgba(197, 169, 130, 0.6);
   }
 }
 
@@ -88,17 +84,13 @@
   }
 }
 
-/* Si la persona tiene desactivadas las animaciones, queda el brillo fijo */
 @media (prefers-reduced-motion: reduce) {
+  .cuenta__digitos,
   .cuenta__numero,
   .cuenta__final {
     animation: none;
-    text-shadow:
-      0 0 6px rgba(200, 45, 70, 0.9),
-      0 0 16px rgba(200, 45, 70, 0.75),
-      0 0 34px rgba(139, 30, 45, 0.9);
   }
-  .cuenta__digitos {
-    animation: none;
+  .cuenta__numero {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
   }
 }

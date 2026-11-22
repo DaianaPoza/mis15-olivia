@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import './Confirmacion.css'
 import Confeti from '../Confeti/Confeti'
-import fondoMobile from '../../assets/img/olivia_confirmacion_nyc_mobile.webp'
-import fondoDesktop from '../../assets/img/olivia_confirmacion_nyc_desktop_completa.webp'
+import skylineMobile from '../../assets/img/skyline_azul_olivia_mobile.webp'
+import skylineDesktop from '../../assets/img/skyline_azul_olivia_desktop.webp'
 
 const RESTRICCIONES = [
   { valor: 'ninguna', texto: 'Ninguna' },
@@ -67,14 +67,13 @@ function Confirmacion() {
 
   return (
     <section className="confirmacion">
-      {/* Fondo: imagen difuminada en toda la sección, con velo blanco (versión clara del Hero) */}
-      <picture className="confirmacion__fondo" aria-hidden="true">
-        <source media="(min-width: 768px)" srcSet={fondoDesktop} />
-        <img src={fondoMobile} alt="" loading="lazy" />
-      </picture>
-      <div className="confirmacion__capa" aria-hidden="true"></div>
-
       <div className="seccion confirmacion__contenido">
+        {/* Skyline de Nueva York en línea azul */}
+        <picture className="confirmacion__skyline">
+          <source media="(min-width: 768px)" srcSet={skylineDesktop} />
+          <img src={skylineMobile} alt="" aria-hidden="true" loading="lazy" />
+        </picture>
+
         <div className="confirmacion__encabezado">
           <h2 className="titulo confirmacion__titulo">Confirmá tu asistencia</h2>
           <p className="confirmacion__descripcion">
@@ -82,7 +81,6 @@ function Confirmacion() {
           </p>
         </div>
 
-        {/* Tarjeta blanca translúcida: el formulario siempre se lee bien */}
         <div className="confirmacion__tarjeta">
         {confeti > 0 && <Confeti key={confeti} />}
         {enviado ? (

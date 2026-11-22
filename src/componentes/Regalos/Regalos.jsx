@@ -51,11 +51,10 @@ function Regalos() {
           </g>
         </svg>
 
-        <h2 className="titulo regalos__titulo">Regalos</h2>
+        <h2 className="titulo regalos__titulo">obsequios</h2>
 
         <p className="regalos__frase">
-          Lo más lindo es que estés conmigo esa noche. Si además querés hacerme un regalo,
-          te dejo mis datos.
+          ¡Lo más lindo de esta noche  <br />es poder compartirla con vos! <br /> Si además querés hacerme un regalo, <br />  te dejo mis datos.
         </p>
 
         <button

@@ -1,6 +1,5 @@
 /* Fuentes: Bodoni Moda (títulos, estilo de la clienta) + Jost (textos) */
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400&family=Jost:wght@300;400;500&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400&family=Jost:wght@300;400;500&display=swap');
 /* ===== Paleta y fuentes de la tarjeta ===== */
 :root {
   --azul: #101E35;       /* Midnight blue */

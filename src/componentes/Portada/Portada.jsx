@@ -13,7 +13,7 @@ function Portada({ onEntrar }) {
     <section className={`portada ${saliendo ? 'portada--saliendo' : ''}`}>
       <p className="titulo portada__mis">Mis 15</p>
       <h1 className="titulo portada__nombre">Olivia</h1>
-      <p className="portada__frase">Te invito a celebrar una noche inolvidable</p>
+      <p className="portada__frase">Una noche, mil luces <br />y un sueño por celebrar</p>
       <button className="portada__boton" onClick={entrar}>
         Entrar
       </button>

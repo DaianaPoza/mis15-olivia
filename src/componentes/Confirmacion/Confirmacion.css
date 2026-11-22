@@ -1,131 +1,50 @@
-/* ===== Confirmación: imagen difuminada clara de fondo, como el Hero ===== */
+/* ===== Confirmación (sección blanca, como las demás) ===== */
 .confirmacion {
-  position: relative;
-  overflow: hidden; /* recorta el borde del desenfoque */
   background-color: var(--blanco);
   color: var(--azul);
 }
 
-/* Imagen de fondo en toda la sección */
-.confirmacion__fondo,
-.confirmacion__fondo img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.confirmacion__fondo img {
-  object-fit: cover;
-  object-position: center top; /* prioriza el Empire State y los carteles */
-  filter: blur(4px) saturate(0.85) brightness(1.05);
-  transform: scale(1.1); /* evita bordes borrosos */
-}
-
-/* Velo blanco: versión clara del Hero */
-.confirmacion__capa {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.55) 0%,
-    rgba(255, 255, 255, 0.35) 40%,
-    rgba(255, 255, 255, 0.6) 100%
-  );
-}
-
-/* Contenido por encima de la foto */
 .confirmacion__contenido {
-  position: relative;
-  /* el título queda a la misma altura que en las demás secciones */
-  padding-top: calc(5rem + 48px + 1.5rem);
+  padding-top: 5rem;
   padding-bottom: 5rem;
 }
 
+/* Skyline azul arriba del título */
+.confirmacion__skyline {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.confirmacion__skyline img {
+  width: 100%;
+  height: auto;
+}
+
 .confirmacion__encabezado {
-  position: relative;
-  isolation: isolate; /* mantiene la nube de luz detrás del texto */
+  margin-top: 1.5rem;
   text-align: center;
 }
 
-/* Nube de luz blanca detrás del título: tapa suave lo que haya en la foto (como el cartel) */
-.confirmacion__encabezado::before {
-  content: '';
-  position: absolute;
-  inset: -3rem -2rem;
-  z-index: -1;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 255, 255, 0.85) 0%,
-    rgba(255, 255, 255, 0.6) 45%,
-    rgba(255, 255, 255, 0) 72%
-  );
-  filter: blur(10px);
-  pointer-events: none;
-}
-
-/* Título con halo blanco que "respira", como la cuenta regresiva */
+/* La tipografía viene de la clase .titulo */
 .confirmacion__titulo {
   font-size: clamp(2.2rem, 10vw, 3.2rem);
   line-height: 1.05;
-  animation: brillo-claro 2.8s ease-in-out infinite;
-}
-
-@keyframes brillo-claro {
-  0%, 100% {
-    text-shadow:
-      0 0 6px rgba(255, 255, 255, 1),
-      0 0 16px rgba(255, 255, 255, 0.85),
-      0 0 30px rgba(255, 255, 255, 0.6);
-  }
-  50% {
-    text-shadow:
-      0 0 8px rgba(255, 255, 255, 1),
-      0 0 24px rgba(255, 255, 255, 1),
-      0 0 48px rgba(255, 255, 255, 0.9),
-      0 0 64px rgba(197, 169, 130, 0.6);
-  }
 }
 
 .confirmacion__descripcion {
   max-width: 300px;
   margin: 1.5rem auto 0;
   font-size: 1.05rem;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.6;
-  text-shadow:
-    0 0 6px rgba(255, 255, 255, 1),
-    0 0 14px rgba(255, 255, 255, 1),
-    0 0 28px rgba(255, 255, 255, 0.8);
 }
 
-/* Tarjeta del formulario: sin bordes, el blanco se difumina hacia la foto */
+/* Contenedor del formulario (también sirve de base para el confeti) */
 .confirmacion__tarjeta {
-  position: relative; /* para el confeti y el fondo difuminado */
-  isolation: isolate; /* mantiene el fondo difuminado detrás del formulario */
+  position: relative;
   margin-top: 2.5rem;
-  padding: 2rem 1.25rem 2.25rem;
-}
-
-/* El fondo blanco va en una capa aparte, con los bordes que se desvanecen */
-.confirmacion__tarjeta::before {
-  content: '';
-  position: absolute;
-  inset: -1.5rem; /* un poco más grande que el formulario, para que el fundido no lo toque */
-  z-index: -1;
-  background-color: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  /* máscara: opaco en el centro y transparente en los 4 bordes */
-  -webkit-mask-image:
-    linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent),
-    linear-gradient(to bottom, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent),
-    linear-gradient(to bottom, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent);
-  mask-composite: intersect;
-  pointer-events: none;
 }
 
 /* ===== Formulario ===== */
@@ -373,55 +292,4 @@
   font-size: 1.05rem;
   font-weight: 400;
   line-height: 1.6;
-}
-
-
-@media (prefers-reduced-motion: reduce) {
-  .confirmacion__titulo {
-    animation: none;
-    text-shadow:
-      0 0 8px rgba(255, 255, 255, 1),
-      0 0 20px rgba(255, 255, 255, 0.9);
-  }
-}
-
-/* ===== Celulares: la foto se ve COMPLETA arriba y se funde a blanco ===== */
-@media (max-width: 767px) {
-  .confirmacion__fondo {
-    inset: 0 0 auto 0; /* pegada arriba, sin estirarse a toda la sección */
-    height: auto;
-    overflow: hidden;
-  }
-
-  .confirmacion__fondo img {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: auto; /* respeta la proporción original: no se recorta */
-    object-fit: initial;
-    transform: scale(1.03); /* mínimo, solo para ocultar el borde del desenfoque */
-  }
-
-  /* El velo cubre solo la foto (alto = ancho × 4/3) y termina en blanco */
-  .confirmacion__capa {
-    inset: 0 0 auto 0;
-    height: calc(100vw * 4 / 3 + 4px); /* un poquito más, para tapar el borde de la foto */
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.45) 0%,
-      rgba(255, 255, 255, 0.15) 50%,
-      rgba(255, 255, 255, 0.15) 75%,
-      var(--blanco) 94%
-    );
-  }
-
-  /* El título queda sobre el cielo y el formulario empieza recién al final de la foto,
-     así se ven el puente y la calle */
-  .confirmacion__encabezado {
-    min-height: calc(100vw * 4 / 3 - (5rem + 48px + 1.5rem) - 3rem);
-  }
-
-  .confirmacion__tarjeta {
-    margin-top: 0;
-  }
 }

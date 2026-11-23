@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Confirmacion.css'
 import Confeti from '../Confeti/Confeti'
 import skylineMobile from '../../assets/img/skyline_azul_olivia_mobile.webp'
@@ -16,7 +16,7 @@ const RESTRICCIONES = [
 const MAX_INVITADOS = 10
 
 // Pegá acá la URL de la aplicación web de Google Apps Script (termina en /exec)
-const URL_PLANILLA = 'https://script.google.com/macros/s/AKfycbyZSBciu7I77rPN4Kb7LsGdAlpFR_EMwthcvvq0yjrXDLJP5IXHUjG6K-Huo5MPeN4/exec'
+const URL_PLANILLA = 'PEGAR_ACA_LA_URL_DE_APPS_SCRIPT'
 
 // ID único de este celular/navegador: si la misma persona vuelve a confirmar,
 // se reemplaza su respuesta en la planilla (y dos tocayos no se pisan)
@@ -46,6 +46,21 @@ function Confirmacion() {
   const [error, setError] = useState('')
   const [enviado, setEnviado] = useState(false)
   const [enviando, setEnviando] = useState(false)
+  const graciasRef = useRef(null)
+
+  // Al confirmar, lleva el mensaje de "¡Gracias!" al centro de la pantalla
+  useEffect(() => {
+    if (enviado && graciasRef.current) {
+      graciasRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }, [enviado])
+
+  // Lista de nombres confirmados: "María, Juan y Ana"
+  const nombresConfirmados = [nombre.trim(), ...invitados.slice(1).map((inv) => inv.nombre.trim())]
+  const listaNombres =
+    nombresConfirmados.length > 1
+      ? `${nombresConfirmados.slice(0, -1).join(', ')} y ${nombresConfirmados.at(-1)}`
+      : nombresConfirmados[0]
   const [confeti, setConfeti] = useState(0) // cada vez que sube, explota el confeti
 
   const elegirAsistencia = (valor) => {
@@ -138,13 +153,30 @@ function Confirmacion() {
         <div className="confirmacion__tarjeta">
         {confeti > 0 && <Confeti key={confeti} />}
         {enviado ? (
-          <div className="confirmacion__gracias" role="status">
+          <div className="confirmacion__gracias" role="status" ref={graciasRef}>
             <p className="titulo confirmacion__gracias-titulo">¡Gracias!</p>
-            <p className="confirmacion__gracias-texto">
-              {asiste === 'si'
-                ? `${nombre.trim()}, tu lugar está confirmado. ¡Nos vemos el 26 de diciembre!`
-                : `${nombre.trim()}, gracias por avisar. ¡Te vamos a extrañar!`}
-            </p>
+
+            {asiste === 'no' && (
+              <p className="confirmacion__gracias-texto">
+                {nombre.trim()}, gracias por avisar. ¡Te vamos a extrañar!
+              </p>
+            )}
+
+            {asiste === 'si' && invitados.length === 1 && (
+              <p className="confirmacion__gracias-texto">
+                {nombre.trim()}, tu lugar está confirmado. ¡Nos vemos el 26 de diciembre!
+              </p>
+            )}
+
+            {asiste === 'si' && invitados.length > 1 && (
+              <>
+                <p className="confirmacion__gracias-texto">
+                  Confirmaste la asistencia de <strong>{invitados.length} personas</strong>:
+                </p>
+                <p className="confirmacion__gracias-nombres">{listaNombres}</p>
+                <p className="confirmacion__gracias-texto">¡Los esperamos el 26 de diciembre!</p>
+              </>
+            )}
           </div>
         ) : (
           <form className="formulario" onSubmit={enviar} noValidate>

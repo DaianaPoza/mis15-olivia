@@ -287,11 +287,27 @@
 }
 
 .confirmacion__gracias-texto {
-  max-width: 300px;
+  max-width: 320px;
   margin: 1.25rem auto 0;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 400;
   line-height: 1.6;
+}
+
+.confirmacion__gracias-texto strong {
+  font-weight: 600;
+}
+
+/* Nombres de todos los que quedaron confirmados */
+.confirmacion__gracias-nombres {
+  max-width: 320px;
+  margin: 0.9rem auto 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--rojo);
+  background-color: rgba(16, 30, 53, 0.04);
+  font-family: var(--fuente-titulos);
+  font-size: 1.25rem;
+  line-height: 1.5;
 }
 
 

@@ -16,7 +16,7 @@ const RESTRICCIONES = [
 const MAX_INVITADOS = 10
 
 // Pegá acá la URL de la aplicación web de Google Apps Script (termina en /exec)
-const URL_PLANILLA = 'PEGAR_ACA_LA_URL_DE_APPS_SCRIPT'
+const URL_PLANILLA = 'https://script.google.com/macros/s/AKfycbyZSBciu7I77rPN4Kb7LsGdAlpFR_EMwthcvvq0yjrXDLJP5IXHUjG6K-Huo5MPeN4/exec'
 
 // ID único de este celular/navegador: si la misma persona vuelve a confirmar,
 // se reemplaza su respuesta en la planilla (y dos tocayos no se pisan)

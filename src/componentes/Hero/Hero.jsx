@@ -13,21 +13,15 @@ function Hero() {
         '--hero-desktop': `url(${fondoDesktop})`,
       }}
     >
-      {/* Arriba: franja azul + "Mis 15" sobre blanco a la izquierda y bloque azul a la derecha */}
-      <div className="hero__arriba">
-        <div className="hero__techo" aria-hidden="true"></div>
-        <div className="hero__mis-caja">
-          <p className="titulo hero__mis">Mis 15</p>
+      <div className="hero__contenido">
+        <p className="titulo hero__mis">Mis 15</p>
+
+        {/* "OLIVIA" con la foto de Nueva York adentro de las letras */}
+        <h1 className="hero__nombre">Olivia</h1>
+
+        <div className="hero__cuenta">
+          <CuentaRegresiva />
         </div>
-        <div className="hero__bloque" aria-hidden="true"></div>
-      </div>
-
-      {/* "OLIVIA" con la foto de Nueva York adentro de las letras */}
-      <h1 className="hero__nombre">Olivia</h1>
-
-      {/* Cuenta regresiva en un bloque azul */}
-      <div className="hero__abajo">
-        <CuentaRegresiva />
       </div>
     </section>
   )

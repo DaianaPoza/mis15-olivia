@@ -1,68 +1,64 @@
-/* ===== Hero: letras recortadas con la foto adentro ===== */
+/* ===== Hero: igual al footer (fondo azul, "OLIVIA" con la foto adentro) ===== */
 .hero {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--azul);
+  color: var(--blanco);
+  text-align: center;
+}
+
+.hero__contenido {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--blanco);
-  color: var(--azul);
-  overflow: hidden;
+  align-items: center;
+  padding: 4rem 1.5rem;
 }
 
-/* ----- Arriba: forma de "L" invertida en azul, como en la referencia ----- */
-.hero__arriba {
-  display: grid;
-  grid-template-columns: 45% 55%;
-  grid-template-rows: auto auto;
-}
-
-/* Franja azul fina a todo el ancho, por encima de "Mis 15" */
-.hero__techo {
-  grid-column: 1 / -1;
-  height: max(28px, 4.5svh);
-  background-color: var(--azul);
-}
-
-.hero__mis-caja {
-  display: flex;
-  align-items: flex-end;
-  min-height: 12svh;
-  padding: 1.25rem 1.5rem 1rem;
-  background-color: var(--blanco);
-}
-
-/* "Mis 15": misma tipografía de siempre (clase .titulo) */
+/* "Mis 15": blanco con brillo que respira (igual que en el footer) */
 .hero__mis {
-  font-size: clamp(1.8rem, 8vw, 3rem);
-  animation: aparecer 0.9s 0.1s ease both;
+  font-size: clamp(2rem, 9vw, 3rem);
+  color: var(--blanco);
+  animation:
+    aparecer 0.9s 0.1s ease both,
+    brillo-mis-hero 2.8s ease-in-out infinite;
 }
 
-.hero__bloque {
-  background-color: var(--azul);
+@keyframes brillo-mis-hero {
+  0%, 100% {
+    text-shadow:
+      0 0 4px rgba(255, 255, 255, 0.5),
+      0 0 12px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    text-shadow:
+      0 0 6px rgba(255, 255, 255, 0.9),
+      0 0 18px rgba(255, 255, 255, 0.7),
+      0 0 36px rgba(197, 169, 130, 0.6);
+  }
 }
 
-/* ----- "OLIVIA" con la foto adentro ----- */
+/* "OLIVIA" con la foto adentro y contorno de luz blanca (igual que en el footer) */
 .hero__nombre {
-  /* Bodoni, la tipografía de la clienta, en su versión más gruesa
-     para que se vea bien la foto adentro */
   font-family: var(--fuente-titulos);
-  font-weight: 800; /* trazos gruesos más anchos */
+  font-weight: 800;
   font-optical-sizing: none;
-  font-variation-settings: 'opsz' 6; /* trazos finos lo más gruesos posible */
-  /* 20vw: como la letra es más ancha, se achica un poco para que entre en cualquier celular */
+  font-variation-settings: 'opsz' 6;
   font-size: clamp(4rem, 20vw, 16rem);
   line-height: 0.9;
-  letter-spacing: 0;
   white-space: nowrap;
-  text-align: center;
   text-transform: uppercase;
-  padding: 0.18em 0.15em 0; /* aire blanco arriba de las letras */
+  margin-top: 1.25rem;
 
-  /* Estira las letras hacia abajo: más altas y alargadas, como en la referencia */
+  /* Letras alargadas */
   transform: scaleY(1.9);
   transform-origin: top center;
-  /* compensa el espacio que ocupa el estirado + aire blanco abajo */
-  margin-bottom: calc(0.81em + 0.18em);
+  margin-bottom: 0.81em; /* compensa el espacio que ocupa el estirado */
 
-  /* La magia: la foto se recorta con la forma de las letras */
+  /* Foto recortada con la forma de las letras */
   background-image: var(--hero-mobile);
   background-size: cover;
   background-position: center 35%;
@@ -70,6 +66,12 @@
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+
+  /* Contorno de luz blanca para que se recorte sobre el azul */
+  filter:
+    drop-shadow(0 0 1px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 2px rgba(255, 255, 255, 0.9))
+    drop-shadow(0 0 16px rgba(255, 255, 255, 0.45));
 
   /* (no usa "aparecer" porque esa animación pisaría el estirado de las letras) */
   animation:
@@ -95,25 +97,17 @@
   to { background-position: center 55%; }
 }
 
-/* ----- Franjas azules que enmarcan la cuenta regresiva ----- */
-.hero__franja {
-  height: 12px;
-  background-color: var(--azul);
-}
-
-/* ----- Abajo: cuenta regresiva en bloque azul con letras blancas ----- */
-.hero__abajo {
+/* Cuenta regresiva debajo del nombre, como parte del header */
+.hero__cuenta {
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 3rem 1.5rem 3.25rem;
-  text-align: center;
-  background-color: var(--azul);
-  color: var(--blanco);
+  margin-top: 2.5rem;
   animation: aparecer 1s 0.5s ease both;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero__mis,
   .hero__nombre {
     animation: none;
   }

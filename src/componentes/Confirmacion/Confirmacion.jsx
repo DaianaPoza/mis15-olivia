@@ -15,6 +15,28 @@ const RESTRICCIONES = [
 
 const MAX_INVITADOS = 10
 
+// Pegá acá la URL de la aplicación web de Google Apps Script (termina en /exec)
+const URL_PLANILLA = 'https://script.google.com/macros/s/AKfycbyZSBciu7I77rPN4Kb7LsGdAlpFR_EMwthcvvq0yjrXDLJP5IXHUjG6K-Huo5MPeN4/exec'
+
+// ID único de este celular/navegador: si la misma persona vuelve a confirmar,
+// se reemplaza su respuesta en la planilla (y dos tocayos no se pisan)
+function obtenerIdRespuesta() {
+  const nuevo = () =>
+    (window.crypto && crypto.randomUUID
+      ? crypto.randomUUID()
+      : Date.now().toString(36) + Math.random().toString(36).slice(2))
+  try {
+    let id = localStorage.getItem('olivia15_id')
+    if (!id) {
+      id = nuevo()
+      localStorage.setItem('olivia15_id', id)
+    }
+    return id
+  } catch {
+    return nuevo() // si el navegador no deja guardar, igual se envía con un ID
+  }
+}
+
 const invitadoVacio = () => ({ nombre: '', restriccion: 'ninguna', detalle: '' })
 
 function Confirmacion() {
@@ -23,6 +45,7 @@ function Confirmacion() {
   const [invitados, setInvitados] = useState([invitadoVacio()])
   const [error, setError] = useState('')
   const [enviado, setEnviado] = useState(false)
+  const [enviando, setEnviando] = useState(false)
   const [confeti, setConfeti] = useState(0) // cada vez que sube, explota el confeti
 
   const elegirAsistencia = (valor) => {
@@ -46,23 +69,54 @@ function Confirmacion() {
     )
   }
 
-  const enviar = (e) => {
+  const enviar = async (e) => {
     e.preventDefault()
+    if (enviando) return
     if (!nombre.trim()) return setError('Completá tu nombre y apellido.')
     if (!asiste) return setError('Contanos si vas a asistir.')
+    if (asiste === 'si') {
+      const sinNombre = invitados.findIndex((inv, i) => i > 0 && !inv.nombre.trim())
+      if (sinNombre !== -1) return setError(`Completá el nombre del invitado ${sinNombre + 1}.`)
+    }
     setError('')
 
-    // Estos son los datos que después vamos a mandar a Google Sheets
-    const respuesta = {
-      nombre: nombre.trim(),
-      asiste,
-      cantidad: asiste === 'si' ? invitados.length : 0,
-      invitados: asiste === 'si' ? invitados : [],
-    }
-    console.log('Respuesta del formulario:', respuesta)
+    // Una fila por persona: el invitado 1 es quien completa el formulario
+    const textoRestriccion = (valor) =>
+      RESTRICCIONES.find((r) => r.valor === valor)?.texto || 'Ninguna'
 
-    setEnviado(true)
-    if (asiste === 'si') setConfeti((n) => n + 1)
+    const respuesta = {
+      id: obtenerIdRespuesta(),
+      nombre: nombre.trim(),
+      asiste: asiste === 'si' ? 'Sí' : 'No',
+      invitados:
+        asiste === 'si'
+          ? invitados.map((inv, i) => ({
+              nombre: i === 0 ? nombre.trim() : inv.nombre.trim(),
+              restriccion: textoRestriccion(inv.restriccion),
+              detalle: inv.detalle.trim(),
+            }))
+          : [{ nombre: nombre.trim(), restriccion: '', detalle: '' }],
+    }
+
+    setEnviando(true)
+    try {
+      const res = await fetch(URL_PLANILLA, {
+        method: 'POST',
+        // text/plain evita el bloqueo de seguridad (CORS) de Google
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(respuesta),
+      })
+      const datos = await res.json()
+      if (!datos.ok) throw new Error(datos.error || 'Error al guardar')
+
+      setEnviado(true)
+      if (asiste === 'si') setConfeti((n) => n + 1)
+    } catch (err) {
+      console.error(err)
+      setError('No pudimos enviar tu respuesta. Revisá tu conexión e intentá de nuevo.')
+    } finally {
+      setEnviando(false)
+    }
   }
 
   return (
@@ -247,8 +301,8 @@ function Confirmacion() {
               </p>
             )}
 
-            <button type="submit" className="formulario__enviar">
-              Confirmar
+            <button type="submit" className="formulario__enviar" disabled={enviando}>
+              {enviando ? 'Enviando…' : 'Confirmar'}
             </button>
           </form>
         )}

@@ -293,3 +293,12 @@
   font-weight: 400;
   line-height: 1.6;
 }
+
+
+
+/* Mientras se envía a la planilla */
+.formulario__enviar:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  animation: none;
+}
